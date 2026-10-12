@@ -6,13 +6,13 @@
 |---|---|
 | Họ và tên | `<điền>` |
 | MSSV (đúng bằng LAB_STUDENT_ID trong .env) | 2A202602625 |
-| GitHub | `<điền: tên tài khoản>` |
+| GitHub | Munfond |
 | Trip dùng cho bài tập sập và chạy lại (xem GUIDE, bước 5) | `<điền: trip-xxxxx>` |
 
 ## Kết quả cuối
 
-- `dataset_version` của bạn: `<điền>`  (phải khớp `report/evidence/run_summary.json`)
-- Số khung hình train / val / test của bạn: `<điền>`
+- `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
+- Số khung hình train / val / test của bạn: 718 / 149 / 152
 - `report/verify.txt`: tạo bằng `python3 scripts/check_submission.py --save-verify` (phải có `27/27 checks passed`).
 - Ảnh chụp trong `report/screenshots/`: `airflow_graph.png`, `minio_lake.png`, `metabase_dashboard.png`, và ảnh bài tập sập/chạy lại (log task đỏ thấy trip của bạn).
 
