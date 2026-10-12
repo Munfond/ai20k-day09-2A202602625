@@ -13,6 +13,8 @@
 
 > Đã hoàn thành cả năm bước, DAG Airflow thành công và bài tập phục hồi task lỗi đạt 27/27. Dataset, split và số dòng sau phục hồi khớp lượt DAG chuẩn; `LAB_FAIL_ONCE` đã được gỡ khỏi `.env` và áp dụng lại Docker Compose.
 
+Trước khi nộp, tôi chạy lại `step all --reset` với MSSV thật `2A202602625` và cấu hình mặc định. Lượt cuối đạt cả năm bước và 27/27; `run_summary.json` được sinh lại, vẫn có phiên bản và split như dưới đây. Log nằm ở `report/evidence/final_full_run.txt`; ảnh Airflow và các thí nghiệm giữ bằng chứng của các lượt thực hiện trước đó.
+
 - `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
 - Số khung hình train / val / test của bạn: 718 / 149 / 152
 - Số trip train / val / test: 18 / 4 / 4; 26 trip đều chỉ thuộc một split.
