@@ -1,0 +1,263 @@
+{
+  "student_id": "2A202602625",
+  "finished_at": "2026-10-12T10:28:13.427856+00:00",
+  "stage": "second",
+  "dataset_version": "4af87f527536",
+  "by_split": {
+    "train": 718,
+    "val": 149,
+    "test": 152
+  },
+  "trips_by_split": {
+    "val": 4,
+    "train": 18,
+    "test": 4
+  },
+  "per_drive_split": [
+    {
+      "drive_id": "drive_a",
+      "split": "test",
+      "frames": 53,
+      "trips": 2
+    },
+    {
+      "drive_id": "drive_a",
+      "split": "train",
+      "frames": 351,
+      "trips": 9
+    },
+    {
+      "drive_id": "drive_a",
+      "split": "val",
+      "frames": 32,
+      "trips": 2
+    },
+    {
+      "drive_id": "drive_b",
+      "split": "test",
+      "frames": 99,
+      "trips": 2
+    },
+    {
+      "drive_id": "drive_b",
+      "split": "train",
+      "frames": 367,
+      "trips": 9
+    },
+    {
+      "drive_id": "drive_b",
+      "split": "val",
+      "frames": 117,
+      "trips": 2
+    }
+  ],
+  "trip_assignments": [
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-00003",
+      "split": "train",
+      "frames": 46,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-02086",
+      "split": "train",
+      "frames": 32,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-02097",
+      "split": "train",
+      "frames": 29,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-02134",
+      "split": "train",
+      "frames": 57,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-03904",
+      "split": "val",
+      "frames": 11,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-04622",
+      "split": "test",
+      "frames": 26,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-04868",
+      "split": "train",
+      "frames": 49,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-06570",
+      "split": "train",
+      "frames": 32,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-07304",
+      "split": "train",
+      "frames": 34,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-07774",
+      "split": "val",
+      "frames": 21,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-07900",
+      "split": "test",
+      "frames": 27,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-08888",
+      "split": "train",
+      "frames": 36,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "trip_id": "trip-09608",
+      "split": "train",
+      "frames": 36,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-00722",
+      "split": "test",
+      "frames": 54,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-01037",
+      "split": "train",
+      "frames": 44,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-02689",
+      "split": "train",
+      "frames": 19,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-02736",
+      "split": "train",
+      "frames": 55,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-03365",
+      "split": "train",
+      "frames": 54,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-04237",
+      "split": "train",
+      "frames": 59,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-04324",
+      "split": "val",
+      "frames": 60,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-04871",
+      "split": "train",
+      "frames": 43,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-05297",
+      "split": "train",
+      "frames": 29,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-05905",
+      "split": "val",
+      "frames": 57,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-06667",
+      "split": "train",
+      "frames": 27,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-08448",
+      "split": "test",
+      "frames": 45,
+      "distinct_splits": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "trip_id": "trip-09209",
+      "split": "train",
+      "frames": 37,
+      "distinct_splits": 1
+    }
+  ],
+  "manifest_key": "gold/datasets/4af87f527536/manifest.json",
+  "lineage": {
+    "bronze.raw_telemetry_a": 0,
+    "bronze.raw_telemetry_b": 0,
+    "bronze.trips_raw": 0,
+    "bronze.video_files": 1,
+    "silver.frames": 27,
+    "silver.telemetry": 0,
+    "silver.frames_flagged": 0,
+    "silver.frame_telemetry": 0,
+    "input_video_sha256": {
+      "drive_b": "bfa62703f645ff77a8578ae3fc74a00881140d38a404d43c8e2af265bbee9fdc",
+      "drive_a": "636ba1a98dfc5ba665d1c935e1d2064e69f4df360ff9ffbd15795957d5e7e9aa"
+    }
+  },
+  "repeat_export": {
+    "first_version": "4af87f527536",
+    "second_version": "4af87f527536",
+    "same_version": true,
+    "same_split_counts": true,
+    "same_manifest_parquet_sha256": true,
+    "same_lineage": true,
+    "first_created_at": "2026-10-12T10:26:29.835173+00:00",
+    "second_created_at": "2026-10-12T10:28:08.080431+00:00"
+  }
+}

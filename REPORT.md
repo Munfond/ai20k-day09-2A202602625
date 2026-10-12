@@ -11,10 +11,11 @@
 
 ## Kết quả cuối
 
-> Các số liệu toàn pipeline bên dưới thuộc lượt chạy thử setup đã đạt 27/27. Sau khi thực hành Bước 1 với `--reset` và hoàn tất Bước 2–3, lake hiện có Bronze và Silver telemetry/frames; sẽ chạy lại các bước tiếp theo và cập nhật kết quả cuối khi hoàn tất.
+> Lượt chạy thử setup đã đạt 27/27. Dataset và split bên dưới đã được xác nhận lại ở Bước 4 sau khi làm lại Bronze, Silver và Gold; Warehouse đang chờ chạy lại ở Bước 5 để cập nhật bằng chứng toàn pipeline.
 
 - `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
 - Số khung hình train / val / test của bạn: 718 / 149 / 152
+- Số trip train / val / test: 18 / 4 / 4; 26 trip đều chỉ thuộc một split.
 - `report/verify.txt`: tạo bằng `python3 scripts/check_submission.py --save-verify` (phải có `27/27 checks passed`).
 - Ảnh chụp trong `report/screenshots/`: `airflow_graph.png`, `minio_lake.png`, `metabase_dashboard.png`, và ảnh bài tập sập/chạy lại (log task đỏ thấy trip của bạn).
 
@@ -94,17 +95,35 @@ Bằng chứng: `report/evidence/threshold.json`, `threshold_log.txt`, `silver_f
 ### Câu 6
 Dựa vào `leakage.json`: chia theo khung hình làm bao nhiêu trip bị chia cắt, so với chia theo trip? Vì sao điều này làm điểm kiểm thử đẹp một cách giả tạo?
 
-(trả lời ở đây)
+Thí nghiệm dùng 1.019 frame đủ chất lượng thuộc 26 trip. Chia theo frame bằng hash của `frame_id` để mô phỏng split 70/15/15 làm 26/26 trip nằm ở nhiều split; cả 26 trip đều có frame ở train lẫn test.
+Chia theo trip của Gold cho 0 trip bị chia cắt; train có 718 frame/18 trip, val 149/4 và test 152/4. Mỗi drive đều có 9 trip train, 2 val và 2 test.
+Các frame gần nhau trong cùng cảnh thường tương tự về đường, vật thể và điều kiện quay. Nếu đưa chúng vào cả train và test, mô hình có thể tận dụng cảnh đã gặp thay vì khái quát sang chuyến mới, nên điểm test có nguy cơ cao một cách giả tạo.
+Thí nghiệm này đo rò rỉ trip, không huấn luyện mô hình hay đo mức tăng accuracy; chia theo trip loại được kiểu rò rỉ đang kiểm tra, nhưng không tự chứng minh mọi nguồn rò rỉ khác đã biến mất.
+Bằng chứng: `report/evidence/leakage.json`, `leakage_log.txt`; danh sách 26 trip và split tương ứng nằm trong `gold_observations.json`.
 
 ### Câu 7
 Vì sao `dataset_version` là **băm nội dung** chứ không phải ngày giờ hay số đếm? Hai lần chạy liên tiếp cho kết quả gì? Vì sao `dataset_version` của bạn **khác** bạn bè dù cùng dữ liệu (liên hệ MSSV)?
 
-(trả lời ở đây)
+Version của tôi là `4af87f527536`. Lần chạy Bước 4 và lần gọi `export-dataset` tiếp theo đều cho version này, cùng train/val/test = 718/149/152 và cùng SHA256 manifest Parquet `1947e4f7a0fd2dd0f8432021b723d14904ead90d57d079f1cf10830e0d255a7f`.
+Cụ thể, mã export sắp theo `frame_id`, ghép từng cặp `frame_id|split`, băm SHA256 rồi lấy 12 ký tự đầu. Vì phụ thuộc tập frame và cách chia split, cùng đầu vào và cùng MSSV cho cùng version; ngày giờ hay số đếm sẽ đổi theo lần chạy dù dataset không đổi.
+MSSV `2A202602625` được trộn vào `md5(trip_id || LAB_STUDENT_ID)` để xếp trip trong từng drive trước khi gán split. MSSV khác có thể làm trip đổi split và đổi version, dù cùng video và telemetry; tôi giữ nguyên MSSV thật, không thực hiện thử đổi MSSV trong bước này.
+Version này không băm toàn bộ byte ảnh, mọi cột telemetry hay lineage. Hai manifest JSON có `created_at` khác nhau nhưng version không đổi; cần dùng thêm checksum, lineage và nguồn đã lưu để kiểm tra đầy đủ dataset, không coi 12 ký tự version là bằng chứng duy nhất.
+Bằng chứng so sánh: `report/evidence/gold_manifest_first.json`, `gold_manifest_second.json`, `gold_export_again.txt` và trường `repeat_export` trong `gold_observations.json`.
 
 ### Câu 8
 Đọc phần `lineage` trong `manifest.json` của dataset bạn. Trả lời "dataset này được tạo từ dữ liệu nào?" bằng chính nội dung đó. Nếu một người hỏi 3 tháng sau, thông tin nào giúp tái tạo lại đúng dataset này?
 
-(trả lời ở đây)
+Manifest tại `gold/datasets/4af87f527536/manifest.json` ghi: `bronze.raw_telemetry_a=0`, `bronze.raw_telemetry_b=0`, `bronze.trips_raw=0`, `bronze.video_files=1`; `silver.frames=27`, `silver.telemetry=0`, `silver.frames_flagged=0`, `silver.frame_telemetry=0`.
+Đó là telemetry thô của hai drive và metadata trip/video ở Bronze, cùng các frame, telemetry sạch, cờ chất lượng và kết quả ghép event time ở Silver. Version 27 của frames phản ánh hai lần ghi lại trip trong thí nghiệm idempotency, dù nội dung dùng để chia dataset không đổi.
+`input_video_sha256` xác định chính xác hai file video nguồn:
+
+```text
+drive_a: 636ba1a98dfc5ba665d1c935e1d2064e69f4df360ff9ffbd15795957d5e7e9aa
+drive_b: bfa62703f645ff77a8578ae3fc74a00881140d38a404d43c8e2af265bbee9fdc
+```
+
+Manifest còn ghi luật loại đen/mờ/gần trùng/không sync_ok, split theo trip phân tầng theo drive và checksum manifest Parquet. Sau 3 tháng, cần giữ manifest, dữ liệu nguồn đúng checksum, các phiên bản Delta kèm log/file dữ liệu, MSSV `2A202602625`, code Git và cấu hình/ngưỡng/thư viện để đọc lại hoặc dựng lại đúng kết quả.
+Lineage giúp truy ngược phiên bản bảng và video; manifest hiện không ghi trực tiếp MSSV, commit code hay toàn bộ cấu hình môi trường, nên không thể chỉ dựa vào manifest để tái tạo mọi chi tiết. Bản sao nguyên manifest và đối chiếu split được lưu trong `report/evidence/gold_manifest_second.json` và `gold_observations.json`.
 
 ## Bước 5 · Điều phối và phục vụ
 
