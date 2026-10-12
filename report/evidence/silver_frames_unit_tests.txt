@@ -1,0 +1,14 @@
+test_csv_to_table_keeps_everything_as_text_and_adds_lineage (test_units.Bronze.test_csv_to_table_keeps_everything_as_text_and_adds_lineage) ... ok
+test_sha256_changes_with_content (test_units.Bronze.test_sha256_changes_with_content) ... ok
+test_expected_quarantine_counts (test_units.Expectations.test_expected_quarantine_counts) ... ok
+test_fail_once_switch (test_units.Expectations.test_fail_once_switch) ... ok
+test_black_frame_has_no_edges (test_units.FrameSignals.test_black_frame_has_no_edges) ... ok
+test_blur_score_drops_when_blurred (test_units.FrameSignals.test_blur_score_drops_when_blurred) ... ok
+test_dhash_differs_for_different_scenes (test_units.FrameSignals.test_dhash_differs_for_different_scenes) ... ok
+test_dhash_fits_signed_bigint (test_units.FrameSignals.test_dhash_fits_signed_bigint) ... ok
+test_dhash_stable_for_near_identical_frames (test_units.FrameSignals.test_dhash_stable_for_near_identical_frames) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.156s
+
+OK

@@ -11,7 +11,7 @@
 
 ## Kết quả cuối
 
-> Các số liệu toàn pipeline bên dưới thuộc lượt chạy thử setup đã đạt 27/27. Sau khi thực hành Bước 1 với `--reset` và hoàn tất Bước 2, lake hiện có Bronze và Silver telemetry; sẽ chạy lại các bước tiếp theo và cập nhật kết quả cuối khi hoàn tất.
+> Các số liệu toàn pipeline bên dưới thuộc lượt chạy thử setup đã đạt 27/27. Sau khi thực hành Bước 1 với `--reset` và hoàn tất Bước 2–3, lake hiện có Bronze và Silver telemetry/frames; sẽ chạy lại các bước tiếp theo và cập nhật kết quả cuối khi hoàn tất.
 
 - `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
 - Số khung hình train / val / test của bạn: 718 / 149 / 152
@@ -65,18 +65,29 @@ Bằng chứng: `report/evidence/break_gate.json`, `break_gate_log.txt` và kế
 ### Câu 4
 Dựa vào `idempotency.json`: số dòng trước và sau hai lần chạy lại, và khi ghi kiểu `append`. Vì sao Delta `overwrite` theo partition (một trip) an toàn hơn xoá rồi ghi lại, nhất là khi giữa chừng có lỗi?
 
-(trả lời ở đây)
+Tôi chạy lại `trip-00003`, có 60 frame. Trước và sau hai lần trích lại, toàn bảng `silver.frames` vẫn có 1.246 dòng, dấu vân tay đều là `6c7480dfde7e`; `idempotency.json` ghi `unchanged=true`.
+Mô phỏng append vào bảng thử cho cùng trip hai lần tạo 120 dòng, bằng 2 × 60: dữ liệu bị nhân đôi dù nội dung frame không đổi.
+Pipeline dùng Delta `overwrite` với predicate `trip_id = 'trip-00003'` để thay đúng nhóm dòng của trip, giữ dữ liệu các trip khác; thay đổi bảng được công bố qua một commit giao dịch, tránh khoảng trống giữa thao tác xóa và ghi riêng rẽ.
+Nếu lần ghi chưa commit bị lỗi, phiên bản đã commit trước đó vẫn là trạng thái có thể đọc; khi chạy lại, trip được thay thế thay vì append thêm. Ảnh JPG được ghi lại vào cùng key, còn tính giao dịch nói trên áp dụng cho bảng Delta, không phải một giao dịch chung cho mọi ảnh và bảng.
+Idempotent ở đây là số dòng và nội dung được lấy dấu vân tay không đổi; timestamp `_processed_at` không nằm trong phép băm và lịch sử Delta vẫn có thêm hai commit, đưa bảng từ version 25 lên 27.
+Bước 3 đạt 6/6 kiểm tra, dbt test `PASS=8 WARN=0 ERROR=0`; 9/9 unit test đều OK. Bằng chứng: `idempotency.json`, `idempotency_log.txt`, `silver_frames_step3.txt` và `silver_frames_unit_tests.txt` trong `report/evidence/`.
 
 ### Câu 5
 Khung hình **đen** và khung hình **tối** khác nhau thế nào, pipeline xử lý khác nhau ra sao, bạn có đồng ý không? Dựa vào `threshold.json`: nếu chọn ngưỡng 0, 2, 6 thì bao nhiêu khung bị coi là trùng ở mỗi drive? Bạn chọn ngưỡng nào, vì sao, và ngưỡng đó phụ thuộc vào tốc độ xe thế nào?
 
 | dHash khác tối đa | số khung trùng, drive A | số khung trùng, drive B |
 |---|---|---|
-| 0 | | |
-| 2 | | |
-| 6 | | |
+| 0 | 61 | 8 |
+| 2 | 149 | 53 |
+| 6 | 363 | 244 |
 
-(trả lời ở đây)
+Khung đen có độ sáng trung bình `<12`; khung tối có `12 ≤ brightness <40` và vẫn có thể chứa thông tin cảnh quay. Silver giữ frame cùng các cờ; Gold lọc đen, mờ (`blur_score <40` khi không đen), gần trùng hoặc mất đồng bộ, còn cờ tối không tự gây loại bỏ.
+Thống kê thực tế: A có 602 frame, 6 đen, 9 mờ, 4 tối, 149 gần trùng, 7 mất đồng bộ; B có 644 frame, 4 đen, 0 mờ, 61 tối, 53 gần trùng, 7 mất đồng bộ. Các cờ có thể chồng nhau; 4 frame tối ở A và 58/61 frame tối ở B đáp ứng các điều kiện để vào Gold, 3 frame tối còn lại ở B vướng cờ khác.
+Tôi đối chiếu ảnh MinIO: `drive_a/01001.jpg` đen hoàn toàn, brightness 0 và sync gap 18 ms; `01998.jpg` bị nhòe rõ, blur score 2,485 và gap 16 ms; `00545.jpg` có bóng tối nhưng vẫn thấy đường/cây, brightness 39,647, blur score 947,195 và gap 91 ms, nên được giữ.
+Frame bình thường `00005.jpg` có gap 92 ms. Ghép ASOF chọn telemetry cùng drive gần nhất ở trước hoặc đúng thời điểm frame; gap trung bình A/B là 66/73 ms, tối đa 2.884/3.112 ms, và gap >150 ms hoặc không có bản ghi trước frame được gắn `sync_lost`.
+Tôi đồng ý giữ cảnh tối vì đó là điều kiện thực tế mà mô hình cần học, đồng thời vẫn loại nếu ảnh mờ/trùng hoặc ghép telemetry không đạt. Tôi chọn ngưỡng dHash 2 cho lab: ngưỡng 0 chỉ bắt hash giống hệt, còn 6 tăng số frame bị coi là trùng thêm 214 ở A và 191 ở B so với 2, có nguy cơ loại cảnh còn khác biệt.
+Ở tốc độ lấy mẫu 2 fps cố định, xe chạy chậm/đứng yên thường làm hai frame liên tiếp giống nhau hơn; xe chạy nhanh thường làm cảnh thay đổi nhiều hơn. Ngưỡng cần xét cùng tốc độ, chuyển động cảnh và fps; dHash ít khác không tự chứng minh camera bị đứng hình. Ngưỡng 2 là lựa chọn cân bằng cho lab này, chưa phải tối ưu đã được đo bằng chất lượng mô hình.
+Bằng chứng: `report/evidence/threshold.json`, `threshold_log.txt`, `silver_frames_observations.json`; ảnh đối chiếu nằm trong `report/screenshots/silver_frame_{normal,black,blurry,dark_kept}.png`.
 
 ## Bước 4 · Gold
 
