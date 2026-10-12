@@ -11,6 +11,8 @@
 
 ## Kết quả cuối
 
+> Các số liệu toàn pipeline bên dưới thuộc lượt chạy thử setup đã đạt 27/27. Sau khi thực hành Bước 1 với `--reset`, lake hiện chỉ có Bronze; sẽ chạy lại các bước tiếp theo và cập nhật kết quả cuối khi hoàn tất.
+
 - `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
 - Số khung hình train / val / test của bạn: 718 / 149 / 152
 - `report/verify.txt`: tạo bằng `python3 scripts/check_submission.py --save-verify` (phải có `27/27 checks passed`).
@@ -21,7 +23,14 @@
 ### Câu 1
 Liệt kê **ít nhất 4 khác biệt** giữa telemetry nguồn A và nguồn B mà bạn thấy ở bronze. Vì sao pipeline giữ **mỗi nguồn một bảng bronze** và để mọi cột ở dạng chữ, thay vì gộp và ép kiểu ngay?
 
-(trả lời ở đây)
+Nguồn A dùng `ts_utc` dạng ISO UTC, ví dụ `2025-10-07T08:00:00.014Z`; B dùng `timestamp_ms` dạng epoch mili giây, ví dụ `1759933801509`.
+A có `speed_mps` theo m/s (mẫu đầu `1.213`), B có `spd_kmh` theo km/h (mẫu đầu `55.11`); đây là hai chuyến khác nhau, không phải hai phép đo cùng một thời điểm.
+Cột hướng của A là `heading_deg`, của B là `hdg`; GPS của A là `lat`/`lon`, của B là `latitude`/`longitude`.
+Bàn đạp A là `gas`/`brake` theo tỷ lệ 0–1 (mẫu `gas=0.028`), B là `throttle_pct`/`brake_pct` theo phần trăm (mẫu `throttle_pct=2.0`); ngoài ra A dùng `acc_x`/`acc_y`/`steer`, B dùng `ax`/`ay`/`steering`.
+Bronze giữ hai bảng riêng vì tên cột, đơn vị và cách biểu diễn thời gian khác nhau. Các cột nguồn đều là `string`, kể cả 30 giá trị tốc độ rỗng `""` ở mỗi nguồn; các cột metadata `_row_no` và `_ingested_at` có kiểu riêng.
+Giữ nguyên giá trị giúp truy vết, đọc lại dữ liệu và tránh mất dòng lỗi do ép kiểu sớm; Silver mới chuyển đơn vị, parse timestamp, hiệu chỉnh đồng hồ B lệch 1.500 ms và phân loại lỗi vào quarantine.
+Sau nạp lặp, A vẫn có 3.021 dòng, B 3.234 dòng; mỗi bảng telemetry chỉ có một commit Delta (version 0). `video_files` vẫn có 2 dòng/2 SHA256 khác nhau; hai commit của bảng video ứng với hai file được nạp lần đầu, lượt nạp lại không tạo commit mới.
+Bằng chứng: `report/evidence/bronze_step1.txt`, `bronze_history_a.json`, `bronze_observations.json`; MinIO có `bronze/video/{drive_a,drive_b}/raw.mp4` và `bronze/delta/raw_telemetry_a/_delta_log/00000000000000000000.json`.
 
 ## Bước 2 · Silver telemetry
 

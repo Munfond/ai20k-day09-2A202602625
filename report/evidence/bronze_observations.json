@@ -1,0 +1,254 @@
+{
+  "student_id": "2A202602625",
+  "finished_at": "2026-10-12T10:08:19.331357+00:00",
+  "before_repeat": {
+    "raw_telemetry_a": {
+      "rows": 3021,
+      "version": 0,
+      "commits": 1
+    },
+    "raw_telemetry_b": {
+      "rows": 3234,
+      "version": 0,
+      "commits": 1
+    },
+    "video_files": {
+      "rows": 2,
+      "version": 1,
+      "commits": 2
+    },
+    "trips_raw": {
+      "rows": 26,
+      "version": 0,
+      "commits": 1
+    }
+  },
+  "repeat_results": [
+    {
+      "drive": "drive_a",
+      "video": "already present",
+      "telemetry_rows": "already present"
+    },
+    {
+      "drive": "drive_b",
+      "video": "already present",
+      "telemetry_rows": "already present"
+    },
+    {
+      "trips": "already present"
+    }
+  ],
+  "after_repeat": {
+    "raw_telemetry_a": {
+      "rows": 3021,
+      "version": 0,
+      "commits": 1
+    },
+    "raw_telemetry_b": {
+      "rows": 3234,
+      "version": 0,
+      "commits": 1
+    },
+    "video_files": {
+      "rows": 2,
+      "version": 1,
+      "commits": 2
+    },
+    "trips_raw": {
+      "rows": 26,
+      "version": 0,
+      "commits": 1
+    }
+  },
+  "idempotent": true,
+  "video_files": [
+    {
+      "drive_id": "drive_b",
+      "uri": "s3://lake/bronze/video/drive_b/raw.mp4",
+      "sha256": "bfa62703f645ff77a8578ae3fc74a00881140d38a404d43c8e2af265bbee9fdc",
+      "bytes": 15270065,
+      "video_start_utc": "2025-10-08T14:30:00+00:00",
+      "telemetry_clock_offset_ms": 1500,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "duration_s": 321.4,
+      "_batch_id": "bfa62703f645",
+      "_ingested_at": "2026-10-12 10:06:23.318746+00:00"
+    },
+    {
+      "drive_id": "drive_a",
+      "uri": "s3://lake/bronze/video/drive_a/raw.mp4",
+      "sha256": "636ba1a98dfc5ba665d1c935e1d2064e69f4df360ff9ffbd15795957d5e7e9aa",
+      "bytes": 11958062,
+      "video_start_utc": "2025-10-07T08:00:00+00:00",
+      "telemetry_clock_offset_ms": 0,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 10.0,
+      "duration_s": 300.1,
+      "_batch_id": "636ba1a98dfc",
+      "_ingested_at": "2026-10-12 10:06:21.913352+00:00"
+    }
+  ],
+  "telemetry": {
+    "raw_telemetry_a": {
+      "schema": {
+        "ts_utc": "string",
+        "speed_mps": "string",
+        "heading_deg": "string",
+        "lat": "string",
+        "lon": "string",
+        "alt_m": "string",
+        "acc_x": "string",
+        "acc_y": "string",
+        "gas": "string",
+        "brake": "string",
+        "steer": "string",
+        "drive_id": "string",
+        "_source_file": "string",
+        "_batch_id": "string",
+        "_row_no": "int64",
+        "_ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "samples": [
+        {
+          "ts_utc": "2025-10-07T08:00:00.014Z",
+          "speed_mps": "1.213",
+          "heading_deg": "292.3385",
+          "lat": "48.582375",
+          "lon": "13.396210",
+          "alt_m": "48.6",
+          "acc_x": "0.360",
+          "acc_y": "0.380",
+          "gas": "0.028",
+          "brake": "0.000",
+          "steer": "-0.553",
+          "drive_id": "drive_a",
+          "_source_file": "telemetry_a.csv",
+          "_batch_id": "17f098d6bbb1",
+          "_row_no": 0,
+          "_ingested_at": "2026-10-12 10:06:22.025207+00:00"
+        },
+        {
+          "ts_utc": "2025-10-07T08:00:00.091Z",
+          "speed_mps": "1.224",
+          "heading_deg": "293.8495",
+          "lat": "48.582375",
+          "lon": "13.396208",
+          "alt_m": "48.6",
+          "acc_x": "0.390",
+          "acc_y": "0.500",
+          "gas": "0.047",
+          "brake": "0.000",
+          "steer": "-0.553",
+          "drive_id": "drive_a",
+          "_source_file": "telemetry_a.csv",
+          "_batch_id": "17f098d6bbb1",
+          "_row_no": 1,
+          "_ingested_at": "2026-10-12 10:06:22.025207+00:00"
+        }
+      ],
+      "empty_strings": {
+        "ts_utc": 0,
+        "speed_mps": 30,
+        "heading_deg": 0,
+        "lat": 0,
+        "lon": 0,
+        "alt_m": 0,
+        "acc_x": 0,
+        "acc_y": 0,
+        "gas": 0,
+        "brake": 0,
+        "steer": 0
+      }
+    },
+    "raw_telemetry_b": {
+      "schema": {
+        "timestamp_ms": "string",
+        "spd_kmh": "string",
+        "hdg": "string",
+        "latitude": "string",
+        "longitude": "string",
+        "altitude": "string",
+        "ax": "string",
+        "ay": "string",
+        "throttle_pct": "string",
+        "brake_pct": "string",
+        "steering": "string",
+        "drive_id": "string",
+        "_source_file": "string",
+        "_batch_id": "string",
+        "_row_no": "int64",
+        "_ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "samples": [
+        {
+          "timestamp_ms": "1759933801509",
+          "spd_kmh": "55.11",
+          "hdg": "80.6009",
+          "latitude": "48.577030",
+          "longitude": "13.454629",
+          "altitude": "48.6",
+          "ax": "0.140",
+          "ay": "-0.420",
+          "throttle_pct": "2.0",
+          "brake_pct": "0.0",
+          "steering": "-0.009",
+          "drive_id": "drive_b",
+          "_source_file": "telemetry_b.csv",
+          "_batch_id": "844e983d0ded",
+          "_row_no": 0,
+          "_ingested_at": "2026-10-12 10:06:23.402544+00:00"
+        },
+        {
+          "timestamp_ms": "1759933801590",
+          "spd_kmh": "54.95",
+          "hdg": "79.4354",
+          "latitude": "48.577034",
+          "longitude": "13.454650",
+          "altitude": "48.6",
+          "ax": "0.220",
+          "ay": "-0.490",
+          "throttle_pct": "2.0",
+          "brake_pct": "0.0",
+          "steering": "-0.009",
+          "drive_id": "drive_b",
+          "_source_file": "telemetry_b.csv",
+          "_batch_id": "844e983d0ded",
+          "_row_no": 1,
+          "_ingested_at": "2026-10-12 10:06:23.402544+00:00"
+        }
+      ],
+      "empty_strings": {
+        "timestamp_ms": 0,
+        "spd_kmh": 30,
+        "hdg": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "altitude": 0,
+        "ax": 0,
+        "ay": 0,
+        "throttle_pct": 0,
+        "brake_pct": 0,
+        "steering": 0
+      }
+    }
+  },
+  "bronze_objects": [
+    "bronze/delta/raw_telemetry_a/_delta_log/00000000000000000000.json",
+    "bronze/delta/raw_telemetry_a/part-00000-efd88c14-69ae-49ae-847f-ced8eb588caf-c000.snappy.parquet",
+    "bronze/delta/raw_telemetry_b/_delta_log/00000000000000000000.json",
+    "bronze/delta/raw_telemetry_b/part-00000-e9dfbd04-6d9c-47fc-8941-4b4f7bda7e8c-c000.snappy.parquet",
+    "bronze/delta/trips_raw/_delta_log/00000000000000000000.json",
+    "bronze/delta/trips_raw/part-00000-64fc6d07-145f-4882-9f52-8ad00d999e3b-c000.snappy.parquet",
+    "bronze/delta/video_files/_delta_log/00000000000000000000.json",
+    "bronze/delta/video_files/_delta_log/00000000000000000001.json",
+    "bronze/delta/video_files/part-00000-4e2d9662-fb43-46cc-8e2a-e76c055c1f1b-c000.snappy.parquet",
+    "bronze/delta/video_files/part-00000-a0742f64-250d-4214-8d33-18b57f2811c0-c000.snappy.parquet",
+    "bronze/video/drive_a/raw.mp4",
+    "bronze/video/drive_b/raw.mp4"
+  ]
+}
