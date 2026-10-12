@@ -1,0 +1,267 @@
+{
+  "student_id": "2A202602625",
+  "finished_at": "2026-10-12T10:15:24.590625+00:00",
+  "clean": [
+    {
+      "drive_id": "drive_a",
+      "rows": 2968,
+      "first_ts": "2025-10-07 08:00:00.014000+00:00",
+      "min_speed_mps": 0.0,
+      "max_speed_mps": 19.818
+    },
+    {
+      "drive_id": "drive_b",
+      "rows": 3181,
+      "first_ts": "2025-10-08 14:30:00.009000+00:00",
+      "min_speed_mps": 4.533333333333333,
+      "max_speed_mps": 27.830555555555556
+    }
+  ],
+  "quarantine": [
+    {
+      "drive_id": "drive_a",
+      "reject_reason": "duplicate",
+      "rows": 20
+    },
+    {
+      "drive_id": "drive_a",
+      "reject_reason": "speed_missing",
+      "rows": 30
+    },
+    {
+      "drive_id": "drive_a",
+      "reject_reason": "speed_out_of_range",
+      "rows": 3
+    },
+    {
+      "drive_id": "drive_b",
+      "reject_reason": "duplicate",
+      "rows": 20
+    },
+    {
+      "drive_id": "drive_b",
+      "reject_reason": "speed_missing",
+      "rows": 30
+    },
+    {
+      "drive_id": "drive_b",
+      "reject_reason": "speed_out_of_range",
+      "rows": 3
+    }
+  ],
+  "clock_alignment": [
+    {
+      "drive_id": "drive_a",
+      "video_start_utc": "2025-10-07T08:00:00+00:00",
+      "telemetry_clock_offset_ms": 0,
+      "first_telemetry_ts": "2025-10-07 08:00:00.014000+00:00",
+      "start_gap_ms": 14
+    },
+    {
+      "drive_id": "drive_b",
+      "video_start_utc": "2025-10-08T14:30:00+00:00",
+      "telemetry_clock_offset_ms": 1500,
+      "first_telemetry_ts": "2025-10-08 14:30:00.009000+00:00",
+      "start_gap_ms": 9
+    }
+  ],
+  "gaps_over_1000_ms": [
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:02:02.189000+00:00",
+      "gap_ms": 3073
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:31:32.712000+00:00",
+      "gap_ms": 3124
+    }
+  ],
+  "reject_examples": [
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:00:32.884000+00:00",
+      "reject_reason": "duplicate",
+      "speed_mps": 4.935,
+      "_batch_id": "17f098d6bbb1",
+      "_row_no": 330,
+      "example_no": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:00:44.609000+00:00",
+      "reject_reason": "duplicate",
+      "speed_mps": 2.819,
+      "_batch_id": "17f098d6bbb1",
+      "_row_no": 448,
+      "example_no": 2
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:01:59.189000+00:00",
+      "reject_reason": "speed_missing",
+      "speed_mps": null,
+      "_batch_id": "17f098d6bbb1",
+      "_row_no": 1200,
+      "example_no": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:01:59.309000+00:00",
+      "reject_reason": "speed_missing",
+      "speed_mps": null,
+      "_batch_id": "17f098d6bbb1",
+      "_row_no": 1201,
+      "example_no": 2
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:00:39.916000+00:00",
+      "reject_reason": "speed_out_of_range",
+      "speed_mps": 250.0,
+      "_batch_id": "17f098d6bbb1",
+      "_row_no": 400,
+      "example_no": 1
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:02:48.789000+00:00",
+      "reject_reason": "speed_out_of_range",
+      "speed_mps": 250.0,
+      "_batch_id": "17f098d6bbb1",
+      "_row_no": 1700,
+      "example_no": 2
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:30:10.585000+00:00",
+      "reject_reason": "duplicate",
+      "speed_mps": 14.966666666666667,
+      "_batch_id": "844e983d0ded",
+      "_row_no": 107,
+      "example_no": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:30:46.806000+00:00",
+      "reject_reason": "duplicate",
+      "speed_mps": 17.044444444444444,
+      "_batch_id": "844e983d0ded",
+      "_row_no": 470,
+      "example_no": 2
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:31:29.717000+00:00",
+      "reject_reason": "speed_missing",
+      "speed_mps": null,
+      "_batch_id": "844e983d0ded",
+      "_row_no": 900,
+      "example_no": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:31:29.809000+00:00",
+      "reject_reason": "speed_missing",
+      "speed_mps": null,
+      "_batch_id": "844e983d0ded",
+      "_row_no": 901,
+      "example_no": 2
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:30:39.913000+00:00",
+      "reject_reason": "speed_out_of_range",
+      "speed_mps": 250.0,
+      "_batch_id": "844e983d0ded",
+      "_row_no": 400,
+      "example_no": 1
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:32:48.719000+00:00",
+      "reject_reason": "speed_out_of_range",
+      "speed_mps": 250.0,
+      "_batch_id": "844e983d0ded",
+      "_row_no": 1700,
+      "example_no": 2
+    }
+  ],
+  "speed_out_of_range_rows": [
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:00:39.916000+00:00",
+      "speed_mps": 250.0,
+      "_row_no": 400
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:02:48.789000+00:00",
+      "speed_mps": 250.0,
+      "_row_no": 1700
+    },
+    {
+      "drive_id": "drive_a",
+      "ts": "2025-10-07 08:04:08.212000+00:00",
+      "speed_mps": 250.0,
+      "_row_no": 2500
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:30:39.913000+00:00",
+      "speed_mps": 250.0,
+      "_row_no": 400
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:32:48.719000+00:00",
+      "speed_mps": 250.0,
+      "_row_no": 1700
+    },
+    {
+      "drive_id": "drive_b",
+      "ts": "2025-10-08 14:34:08.398000+00:00",
+      "speed_mps": 250.0,
+      "_row_no": 2500
+    }
+  ],
+  "restored_dbt_tests": [
+    {
+      "unique_id": "test.day09.accepted_values_silver_telemetry_drive_id__drive_a__drive_b.6194d83e95",
+      "status": "pass",
+      "failures": 0,
+      "message": null
+    },
+    {
+      "unique_id": "test.day09.in_range_silver_telemetry_speed_mps__70__0.d79e8f8070",
+      "status": "pass",
+      "failures": 0,
+      "message": null
+    },
+    {
+      "unique_id": "test.day09.max_gap_ms_silver_telemetry_ts__1000__drive_id.7b5ad390dd",
+      "status": "warn",
+      "failures": 2,
+      "message": "Got 2 results, configured to warn if != 0"
+    },
+    {
+      "unique_id": "test.day09.not_null_silver_telemetry_speed_mps.4d5346485b",
+      "status": "pass",
+      "failures": 0,
+      "message": null
+    },
+    {
+      "unique_id": "test.day09.not_null_silver_telemetry_ts.3353ec0db9",
+      "status": "pass",
+      "failures": 0,
+      "message": null
+    },
+    {
+      "unique_id": "test.day09.unique_combination_silver_telemetry_drive_id__ts.2472a0a8e1",
+      "status": "pass",
+      "failures": 0,
+      "message": null
+    }
+  ],
+  "restored_classification_sql": "CREATE VIEW silver.silver_telemetry_classified AS WITH unioned AS ((SELECT * FROM lakehouse.staging.stg_telemetry_a) UNION ALL BY NAME (SELECT * FROM lakehouse.staging.stg_telemetry_b)), ranked AS (SELECT *, row_number() OVER (PARTITION BY drive_id, ts, lat, lon, heading_deg, acc_x, acc_y, steer ORDER BY _row_no) AS copy_no FROM unioned)SELECT *, CASE  WHEN ((copy_no > 1)) THEN ('duplicate') WHEN ((speed_mps IS NULL)) THEN ('speed_missing') WHEN (((speed_mps < 0) OR (speed_mps > 70))) THEN ('speed_out_of_range') ELSE NULL END AS reject_reason FROM ranked;"
+}

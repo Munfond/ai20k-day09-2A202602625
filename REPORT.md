@@ -11,7 +11,7 @@
 
 ## Kết quả cuối
 
-> Các số liệu toàn pipeline bên dưới thuộc lượt chạy thử setup đã đạt 27/27. Sau khi thực hành Bước 1 với `--reset`, lake hiện chỉ có Bronze; sẽ chạy lại các bước tiếp theo và cập nhật kết quả cuối khi hoàn tất.
+> Các số liệu toàn pipeline bên dưới thuộc lượt chạy thử setup đã đạt 27/27. Sau khi thực hành Bước 1 với `--reset` và hoàn tất Bước 2, lake hiện có Bronze và Silver telemetry; sẽ chạy lại các bước tiếp theo và cập nhật kết quả cuối khi hoàn tất.
 
 - `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
 - Số khung hình train / val / test của bạn: 718 / 149 / 152
@@ -37,12 +37,28 @@ Bằng chứng: `report/evidence/bronze_step1.txt`, `bronze_history_a.json`, `br
 ### Câu 2
 Pipeline đưa hai nguồn về một schema như thế nào (đơn vị, kiểu thời gian, **độ lệch đồng hồ**)? Bằng chứng nào trong kết quả bước 2 cho thấy đã đúng? Dán bảng quarantine của bạn (số dòng theo từng lý do, từng drive) và giải thích vì sao dòng lỗi vào `rejects` thay vì bị xoá.
 
-(trả lời ở đây)
+Trong staging A, `ts_utc` được cast sang `timestamptz`, tốc độ vốn là m/s được chuyển từ chuỗi sang `double`. Staging B đổi tên cột về schema A, chia `spd_kmh` cho 3,6 và chia bàn đạp phần trăm cho 100; `nullif(..., '')` cùng `try_cast` chuyển tốc độ trống/không parse được thành NULL.
+Thời gian B được tính bằng `to_timestamp((timestamp_ms - offset_ms) / 1000.0)`, với offset đọc từ `bronze.video_files`. B lệch 1.500 ms nên được trừ 1,5 giây; timestamp đầu sau chỉnh là `2025-10-08 14:30:00.009000+00:00`, cách video bắt đầu `14:30:00+00:00` chỉ 9 ms, không phải lệch 1.509 ms như trước chỉnh.
+Kết quả thực tế: tổng 6.149 dòng sạch và 106 dòng quarantine; các lý do theo từng nguồn như sau:
+
+| Drive | Dòng nhận | Dòng sạch | duplicate | speed_missing | speed_out_of_range | Tổng rejects |
+|---|---:|---:|---:|---:|---:|---:|
+| drive_a | 3.021 | 2.968 | 20 | 30 | 3 | 53 |
+| drive_b | 3.234 | 3.181 | 20 | 30 | 3 | 53 |
+
+Đối soát cho thấy `2.968 + 53 = 3.021` và `3.181 + 53 = 3.234`, không mất dòng. Tốc độ tối đa sạch là 19,818 m/s ở A và khoảng 27,831 m/s ở B, đều trong ngưỡng 0–70 m/s; module 2 đạt 7/7 kiểm tra.
+Ví dụ rejects thực tế: A tại `08:00:54.184Z` là `duplicate`, A tại `08:01:59.189Z` là `speed_missing`; cả hai drive có 3 dòng tốc độ 250 m/s bị `speed_out_of_range`. Rejects giữ `drive_id`, `ts`, lý do, tốc độ, `_batch_id` và `_row_no`, còn Bronze giữ bản gốc để truy vết; xóa im lặng sẽ làm mất bằng chứng lỗi và khó đối soát nguồn.
+Bằng chứng: `report/evidence/silver_telemetry_step2.txt`, `silver_rejects_sample.txt` và `silver_telemetry_observations.json`.
 
 ### Câu 3
 Vì sao test `max_gap_ms` là `warn` còn `in_range` là `error`? Kết quả thí nghiệm `break-gate` của bạn (`break_gate.json`): test nào bắt được, bao nhiêu dòng, và điều đó cho biết gì về vai trò của "cổng chất lượng"?
 
-(trả lời ở đây)
+`schema.yml` đặt `max_gap_ms` ngưỡng 1.000 ms theo từng drive và `severity: warn`: mất tín hiệu là khiếm khuyết cần theo dõi nhưng được lab cho phép tiếp tục. Dữ liệu sạch của tôi có hai khoảng trống vượt ngưỡng, A 3.073 ms và B 3.124 ms; vì vậy một test WARN ứng với 2 kết quả vi phạm, không phải chỉ một dòng.
+`in_range` kiểm tra tốc độ 0–70 m/s và dùng mức error mặc định: tốc độ phi lý không được đi vào dataset. Chạy thường có `PASS=6 WARN=1 ERROR=0 SKIP=0`; cảnh báo khoảng trống không khiến bước 2 thất bại.
+Thí nghiệm nới riêng luật phân loại `max_speed_mps` lên 1.000, nhưng test vẫn giữ ngưỡng 70. Cả 6 dòng tốc độ 250 m/s (3 dòng mỗi drive) lọt vào bảng sạch; `in_range_silver_telemetry_speed_mps__70__0` bắt đủ 6 dòng, cho `PASS=5 WARN=1 ERROR=1 SKIP=0` và `gate_failed=true`.
+Script đã khôi phục luật 70, kết quả trở về `PASS=6 WARN=1 ERROR=0 SKIP=0`; kiểm tra lại bảng sạch không còn tốc độ ngoài 0–70 m/s hoặc NULL. Model và cấu hình dbt không bị sửa tay.
+Thí nghiệm cho thấy luật làm sạch và cổng kiểm tra độc lập: khi luật làm sạch bị nới sai, test error vẫn phát hiện dữ liệu xấu để bước kiểm tra thất bại và orchestration chặn các task phía sau; warn chỉ báo vấn đề được chấp nhận trong lab.
+Bằng chứng: `report/evidence/break_gate.json`, `break_gate_log.txt` và kết quả test sau khôi phục trong `silver_telemetry_observations.json`.
 
 ## Bước 3 · Silver frames
 
