@@ -1,0 +1,78 @@
+{
+  "experiment": "Tighten frame/telemetry sync tolerance from 150 to 75 ms",
+  "started_at": "2026-10-12T13:33:58.804350+00:00",
+  "method": "dbt --vars override; no source config edits, no experiment export/publish; finally rerun default config",
+  "before": {
+    "sync_tol_ms": 150,
+    "by_drive": [
+      {
+        "drive_id": "drive_a",
+        "total": 602,
+        "sync_lost": 7,
+        "kept": 436
+      },
+      {
+        "drive_id": "drive_b",
+        "total": 644,
+        "sync_lost": 7,
+        "kept": 583
+      }
+    ],
+    "frames": 1019,
+    "by_split": {
+      "test": 152,
+      "train": 718,
+      "val": 149
+    },
+    "dataset_version": "4af87f527536"
+  },
+  "after": {
+    "sync_tol_ms": 75,
+    "by_drive": [
+      {
+        "drive_id": "drive_a",
+        "total": 602,
+        "sync_lost": 272,
+        "kept": 242
+      },
+      {
+        "drive_id": "drive_b",
+        "total": 644,
+        "sync_lost": 328,
+        "kept": 296
+      }
+    ],
+    "frames": 538,
+    "by_split": {
+      "test": 95,
+      "train": 376,
+      "val": 67
+    },
+    "dataset_version": "9a8901ad883f"
+  },
+  "restored": {
+    "sync_tol_ms": 150,
+    "by_drive": [
+      {
+        "drive_id": "drive_a",
+        "total": 602,
+        "sync_lost": 7,
+        "kept": 436
+      },
+      {
+        "drive_id": "drive_b",
+        "total": 644,
+        "sync_lost": 7,
+        "kept": 583
+      }
+    ],
+    "frames": 1019,
+    "by_split": {
+      "test": 152,
+      "train": 718,
+      "val": 149
+    },
+    "dataset_version": "4af87f527536"
+  },
+  "restored_matches_before": true
+}

@@ -1,0 +1,50 @@
+13:34:31  Running with dbt=1.12.5
+13:34:32  Registered adapter: duckdb=1.11.0
+13:34:32  Unable to do partial parsing because config vars, config profile, or config target have changed
+13:34:36  Found 15 models, 1 operation, 28 data tests, 5 sources, 507 macros
+13:34:36  
+13:34:36  Concurrency: 1 threads (target='dev')
+13:34:36  
+13:34:36  1 of 1 START hook: day09.on-run-start.0 ........................................ [RUN]
+13:34:36  1 of 1 OK hook: day09.on-run-start.0 ........................................... [OK in 0.17s]
+13:34:36  
+13:34:36  1 of 2 START sql table model silver.silver_frame_telemetry ..................... [RUN]
+13:34:36  1 of 2 OK created sql table model silver.silver_frame_telemetry ................ [OK in 0.10s]
+13:34:36  2 of 2 START sql table model gold.gold_dataset_frames .......................... [RUN]
+13:34:36  2 of 2 OK created sql table model gold.gold_dataset_frames ..................... [OK in 0.04s]
+13:34:36  
+13:34:36  Finished running 1 project hook, 2 table models in 0 hours 0 minutes and 0.54 seconds (0.54s).
+13:34:36  
+13:34:36  Completed successfully
+13:34:36  
+13:34:36  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=3
+
+13:34:42  Running with dbt=1.12.5
+13:34:43  Registered adapter: duckdb=1.11.0
+13:34:45  Found 15 models, 1 operation, 28 data tests, 5 sources, 507 macros
+13:34:45  
+13:34:45  Concurrency: 1 threads (target='dev')
+13:34:45  
+13:34:46  1 of 1 START hook: day09.on-run-start.0 ........................................ [RUN]
+13:34:46  1 of 1 OK hook: day09.on-run-start.0 ........................................... [OK in 0.43s]
+13:34:46  
+13:34:46  1 of 7 START test accepted_values_gold_dataset_frames_split__train__val__test .. [RUN]
+13:34:46  1 of 7 PASS accepted_values_gold_dataset_frames_split__train__val__test ........ [PASS in 0.09s]
+13:34:46  2 of 7 START test in_range_gold_dataset_frames_speed_mps__70__0 ................ [RUN]
+13:34:46  2 of 7 PASS in_range_gold_dataset_frames_speed_mps__70__0 ...................... [PASS in 0.04s]
+13:34:46  3 of 7 START test max_share_silver_frame_telemetry_sync_lost__0_05 ............. [RUN]
+13:34:46  3 of 7 PASS max_share_silver_frame_telemetry_sync_lost__0_05 ................... [PASS in 0.08s]
+13:34:46  4 of 7 START test no_straddle_gold_dataset_frames_split__trip_id ............... [RUN]
+13:34:46  4 of 7 PASS no_straddle_gold_dataset_frames_split__trip_id ..................... [PASS in 0.11s]
+13:34:46  5 of 7 START test not_null_gold_dataset_frames_frame_id ........................ [RUN]
+13:34:46  5 of 7 PASS not_null_gold_dataset_frames_frame_id .............................. [PASS in 0.06s]
+13:34:46  6 of 7 START test not_null_gold_dataset_frames_frame_uri ....................... [RUN]
+13:34:46  6 of 7 PASS not_null_gold_dataset_frames_frame_uri ............................. [PASS in 0.04s]
+13:34:46  7 of 7 START test unique_gold_dataset_frames_frame_id .......................... [RUN]
+13:34:46  7 of 7 PASS unique_gold_dataset_frames_frame_id ................................ [PASS in 0.04s]
+13:34:46  
+13:34:46  Finished running 1 project hook, 7 data tests in 0 hours 0 minutes and 1.38 seconds (1.38s).
+13:34:46  
+13:34:46  Completed successfully
+13:34:46  
+13:34:46  Done. PASS=8 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=8

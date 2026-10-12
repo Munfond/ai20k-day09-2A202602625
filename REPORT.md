@@ -172,6 +172,37 @@ order by drive_id;
 B có tỷ lệ giữ cao hơn A 18,10 điểm phần trăm. Số liệu bước 3 cho thấy A có nhiều frame gần trùng hơn (149 so với 53) và có thêm frame mờ, phù hợp với chênh lệch này; vì cờ có thể chồng nhau, bảng tỷ lệ riêng không chứng minh đóng góp độc lập của từng lý do.
 Question: `http://localhost:3000/question/46`; dashboard: `http://localhost:3000/dashboard/2`. SQL và kết quả trả về được lưu trong `report/evidence/metabase_question.json`.
 
+## Bonus · Thắt ngưỡng đồng bộ frame–telemetry
+
+Tôi thử giảm `sync_tol_ms` từ **150 ms xuống 75 ms**, giữ nguyên MSSV, dữ liệu, dHash, blur và luật split. Mục tiêu là đo lượng ảnh phải hy sinh khi đòi telemetry gần thời điểm frame hơn. Tôi chạy lại hai model liên quan và test bằng tham số tạm thời, không sửa mã hoặc cấu hình nguồn:
+
+```bash
+scripts/lab.sh dbt run --select silver_frame_telemetry gold_dataset_frames --vars '{"sync_tol_ms": 75}'
+scripts/lab.sh dbt test --select silver_frame_telemetry gold_dataset_frames --vars '{"sync_tol_ms": 75}'
+# Khôi phục bằng cách bỏ tham số override:
+scripts/lab.sh dbt run --select silver_frame_telemetry gold_dataset_frames
+scripts/lab.sh dbt test --select silver_frame_telemetry gold_dataset_frames
+scripts/lab.sh verify
+```
+
+| Chỉ số | Trước: 150 ms | Thử: 75 ms | Khôi phục: 150 ms |
+|---|---:|---:|---:|
+| A: frame mất đồng bộ / tổng | 7 / 602 | 272 / 602 | 7 / 602 |
+| B: frame mất đồng bộ / tổng | 7 / 644 | 328 / 644 | 7 / 644 |
+| A: frame được giữ vào Gold | 436 | 242 | 436 |
+| B: frame được giữ vào Gold | 583 | 296 | 583 |
+| Tổng frame Gold | 1.019 | 538 | 1.019 |
+| Train / val / test | 718 / 149 / 152 | 376 / 67 / 95 | 718 / 149 / 152 |
+| dbt test hai model | — | PASS 7, WARN 1, ERROR 0 | PASS 8, WARN 0, ERROR 0 |
+
+Giảm ngưỡng làm số frame mất đồng bộ tăng từ 14 lên 600, tức thêm 586 frame bị gắn cờ; Gold giảm 481 frame (47,20%). Hai số khác nhau vì một số frame mất đồng bộ mới đã bị loại bởi cờ chất lượng khác. B mất thêm 287 ảnh Gold, A mất thêm 194 ảnh. Với phép ghép ASOF, đây là khoảng cách tới mẫu telemetry gần nhất **ở trước hoặc đúng thời điểm frame**; giảm ngưỡng không sửa timestamp hay chọn một phép ghép mới.
+
+Test `max_share_silver_frame_telemetry_sync_lost__0_05` phát cảnh báo vì tỷ lệ mất đồng bộ toàn bộ frame tăng lên 600/1.246 = 48,15%, vượt 5%. Đây là một WARN cho test tổng tỷ lệ, không phải 600 test lỗi. Các test Gold vẫn PASS vì Gold đã lọc frame không đồng bộ; dataset hợp lệ theo luật nhưng nhỏ hơn nhiều. Thí nghiệm cho thấy đánh đổi giữa độ sát thời gian và lượng dữ liệu, chưa chứng minh mô hình học tốt hơn ở ngưỡng nào. Tôi giữ 150 ms cho bài nộp chính.
+
+Dấu phiên bản tính từ các cặp `frame_id|split` trong DuckDB đổi từ `4af87f527536` sang `9a8901ad883f` trong thí nghiệm và trở về `4af87f527536` sau khôi phục. Bản 75 ms chỉ được tính và kiểm tra trong DuckDB, không export/publish vào lake hoặc warehouse; manifest và dashboard bài chính được giữ ở bản mặc định. File `dbt/dbt_project.yml` vẫn là bản gốc với 150 ms. Sau khôi phục, toàn bộ số đếm và phiên bản khớp trước thí nghiệm, verify đạt **27/27**.
+
+Bằng chứng: `report/evidence/bonus_sync_tolerance.json`, `bonus_sync_75ms_dbt.txt`, `bonus_sync_restored_dbt.txt` và `bonus_sync_verify.txt`. Đây là một thí nghiệm riêng cho mục điểm cộng trong RUBRIC.md; mức điểm thực tế do giảng viên chấm, tối đa +5 và tổng không vượt 100.
+
 ## Nhìn lại
 
 Điều bạn thấy bất ngờ nhất, điều gì còn chưa rõ, và một lỗi dữ liệu mà bạn nghĩ pipeline **chưa** bắt được (nếu có). Tối đa 8 dòng.

@@ -1,0 +1,55 @@
+13:34:03  Running with dbt=1.12.5
+13:34:04  Registered adapter: duckdb=1.11.0
+13:34:04  Unable to do partial parsing because saved manifest not found. Starting full parse.
+13:34:10  Found 15 models, 1 operation, 28 data tests, 5 sources, 507 macros
+13:34:10  
+13:34:10  Concurrency: 1 threads (target='dev')
+13:34:10  
+13:34:13  1 of 1 START hook: day09.on-run-start.0 ........................................ [RUN]
+13:34:13  1 of 1 OK hook: day09.on-run-start.0 ........................................... [OK in 2.38s]
+13:34:13  
+13:34:13  1 of 2 START sql table model silver.silver_frame_telemetry ..................... [RUN]
+13:34:13  1 of 2 OK created sql table model silver.silver_frame_telemetry ................ [OK in 0.13s]
+13:34:13  2 of 2 START sql table model gold.gold_dataset_frames .......................... [RUN]
+13:34:13  2 of 2 OK created sql table model gold.gold_dataset_frames ..................... [OK in 0.05s]
+13:34:13  
+13:34:13  Finished running 1 project hook, 2 table models in 0 hours 0 minutes and 3.17 seconds (3.17s).
+13:34:13  
+13:34:13  Completed successfully
+13:34:13  
+13:34:13  Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=3
+
+13:34:19  Running with dbt=1.12.5
+13:34:20  Registered adapter: duckdb=1.11.0
+13:34:23  Found 15 models, 1 operation, 28 data tests, 5 sources, 507 macros
+13:34:23  
+13:34:23  Concurrency: 1 threads (target='dev')
+13:34:23  
+13:34:24  1 of 1 START hook: day09.on-run-start.0 ........................................ [RUN]
+13:34:24  1 of 1 OK hook: day09.on-run-start.0 ........................................... [OK in 0.53s]
+13:34:24  
+13:34:24  1 of 7 START test accepted_values_gold_dataset_frames_split__train__val__test .. [RUN]
+13:34:24  1 of 7 PASS accepted_values_gold_dataset_frames_split__train__val__test ........ [PASS in 0.15s]
+13:34:24  2 of 7 START test in_range_gold_dataset_frames_speed_mps__70__0 ................ [RUN]
+13:34:24  2 of 7 PASS in_range_gold_dataset_frames_speed_mps__70__0 ...................... [PASS in 0.04s]
+13:34:24  3 of 7 START test max_share_silver_frame_telemetry_sync_lost__0_05 ............. [RUN]
+13:34:24  3 of 7 WARN 1 max_share_silver_frame_telemetry_sync_lost__0_05 ................. [WARN 1 in 0.04s]
+13:34:24  4 of 7 START test no_straddle_gold_dataset_frames_split__trip_id ............... [RUN]
+13:34:24  4 of 7 PASS no_straddle_gold_dataset_frames_split__trip_id ..................... [PASS in 0.05s]
+13:34:24  5 of 7 START test not_null_gold_dataset_frames_frame_id ........................ [RUN]
+13:34:24  5 of 7 PASS not_null_gold_dataset_frames_frame_id .............................. [PASS in 0.06s]
+13:34:24  6 of 7 START test not_null_gold_dataset_frames_frame_uri ....................... [RUN]
+13:34:24  6 of 7 PASS not_null_gold_dataset_frames_frame_uri ............................. [PASS in 0.06s]
+13:34:24  7 of 7 START test unique_gold_dataset_frames_frame_id .......................... [RUN]
+13:34:25  7 of 7 PASS unique_gold_dataset_frames_frame_id ................................ [PASS in 0.06s]
+13:34:25  
+13:34:25  Finished running 1 project hook, 7 data tests in 0 hours 0 minutes and 1.54 seconds (1.54s).
+13:34:25  
+13:34:25  Completed with 1 warning:
+13:34:25  
+13:34:25  [WARNING]: in test max_share_silver_frame_telemetry_sync_lost__0_05 (models/schema.yml)
+13:34:25  [WARNING]: Got 1 result, configured to warn if != 0
+13:34:25  
+13:34:25    compiled code at /tmp/dbt-target/compiled/day09/models/schema.yml/max_share_silver_frame_telemetry_sync_lost__0_05.sql
+13:34:25  
+13:34:25  Done. PASS=7 WARN=1 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=8
