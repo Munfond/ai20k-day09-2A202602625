@@ -1,0 +1,35 @@
+{
+  "student_id": "2A202602625",
+  "captured_at": "2026-10-12T10:39:22.117005+00:00",
+  "stage": "baseline",
+  "frames_rows": 1246,
+  "unique_frame_ids": 1246,
+  "frames_fingerprint": "6c7480dfde7e",
+  "gold_rows": 1019,
+  "unique_gold_frame_ids": 1019,
+  "dataset_version": "4af87f527536",
+  "by_split": {
+    "train": 718,
+    "val": 149,
+    "test": 152
+  },
+  "trips_by_split": {
+    "test": 4,
+    "train": 18,
+    "val": 4
+  },
+  "lineage": {
+    "bronze.raw_telemetry_a": 0,
+    "bronze.raw_telemetry_b": 0,
+    "bronze.trips_raw": 0,
+    "bronze.video_files": 1,
+    "silver.frames": 25,
+    "silver.telemetry": 0,
+    "silver.frames_flagged": 0,
+    "silver.frame_telemetry": 0,
+    "input_video_sha256": {
+      "drive_b": "bfa62703f645ff77a8578ae3fc74a00881140d38a404d43c8e2af265bbee9fdc",
+      "drive_a": "636ba1a98dfc5ba665d1c935e1d2064e69f4df360ff9ffbd15795957d5e7e9aa"
+    }
+  }
+}

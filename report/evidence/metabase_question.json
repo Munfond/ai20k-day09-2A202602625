@@ -1,0 +1,27 @@
+{
+  "student_id": "2A202602625",
+  "captured_at": "2026-10-12T12:57:12.857358+00:00",
+  "dashboard_url": "http://localhost:3000/dashboard/2",
+  "question_url": "http://localhost:3000/question/46",
+  "card_id": 46,
+  "database_id": 2,
+  "question": "Tỷ lệ frame được giữ lại theo drive - 2A202602625",
+  "sql": "select drive_id,\n       sum(frames) as frames_total,\n       sum(frames_kept) as frames_kept,\n       round(100.0 * sum(frames_kept) / nullif(sum(frames), 0), 2) as kept_pct,\n       round(100.0 * (sum(frames) - sum(frames_kept)) / nullif(sum(frames), 0), 2) as dropped_pct\nfrom marts.mart_trip_summary\ngroup by drive_id\norder by drive_id",
+  "status": "completed",
+  "rows": [
+    {
+      "drive_id": "drive_a",
+      "frames_total": 602,
+      "frames_kept": 436,
+      "kept_pct": 72.43,
+      "dropped_pct": 27.57
+    },
+    {
+      "drive_id": "drive_b",
+      "frames_total": 644,
+      "frames_kept": 583,
+      "kept_pct": 90.53,
+      "dropped_pct": 9.47
+    }
+  ]
+}

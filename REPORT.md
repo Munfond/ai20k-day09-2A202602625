@@ -4,14 +4,14 @@
 
 | | |
 |---|---|
-| Họ và tên | `<điền>` |
+| Họ và tên | Nguyễn Đức Anh |
 | MSSV (đúng bằng LAB_STUDENT_ID trong .env) | 2A202602625 |
 | GitHub | Munfond |
-| Trip dùng cho bài tập sập và chạy lại (xem GUIDE, bước 5) | `<điền: trip-xxxxx>` |
+| Trip dùng cho bài tập sập và chạy lại (xem GUIDE, bước 5) | `trip-06570` |
 
 ## Kết quả cuối
 
-> Lượt chạy thử setup đã đạt 27/27. Dataset và split bên dưới đã được xác nhận lại ở Bước 4 sau khi làm lại Bronze, Silver và Gold; Warehouse đang chờ chạy lại ở Bước 5 để cập nhật bằng chứng toàn pipeline.
+> Đã hoàn thành cả năm bước, DAG Airflow thành công và bài tập phục hồi task lỗi đạt 27/27. Dataset, split và số dòng sau phục hồi khớp lượt DAG chuẩn; `LAB_FAIL_ONCE` đã được gỡ khỏi `.env` và áp dụng lại Docker Compose.
 
 - `dataset_version` của bạn: `4af87f527536`  (phải khớp `report/evidence/run_summary.json`)
 - Số khung hình train / val / test của bạn: 718 / 149 / 152
@@ -113,8 +113,8 @@ Bằng chứng so sánh: `report/evidence/gold_manifest_first.json`, `gold_manif
 ### Câu 8
 Đọc phần `lineage` trong `manifest.json` của dataset bạn. Trả lời "dataset này được tạo từ dữ liệu nào?" bằng chính nội dung đó. Nếu một người hỏi 3 tháng sau, thông tin nào giúp tái tạo lại đúng dataset này?
 
-Manifest tại `gold/datasets/4af87f527536/manifest.json` ghi: `bronze.raw_telemetry_a=0`, `bronze.raw_telemetry_b=0`, `bronze.trips_raw=0`, `bronze.video_files=1`; `silver.frames=27`, `silver.telemetry=0`, `silver.frames_flagged=0`, `silver.frame_telemetry=0`.
-Đó là telemetry thô của hai drive và metadata trip/video ở Bronze, cùng các frame, telemetry sạch, cờ chất lượng và kết quả ghép event time ở Silver. Version 27 của frames phản ánh hai lần ghi lại trip trong thí nghiệm idempotency, dù nội dung dùng để chia dataset không đổi.
+Manifest cuối tại `gold/datasets/4af87f527536/manifest.json` ghi: `bronze.raw_telemetry_a=0`, `bronze.raw_telemetry_b=0`, `bronze.trips_raw=0`, `bronze.video_files=1`; `silver.frames=25`, `silver.telemetry=0`, `silver.frames_flagged=0`, `silver.frame_telemetry=0`.
+Đó là telemetry thô của hai drive và metadata trip/video ở Bronze, cùng các frame, telemetry sạch, cờ chất lượng và kết quả ghép event time ở Silver. Bản manifest lưu ở Bước 4 có frames version 27 do hai lần ghi lại trip ở thí nghiệm idempotency; reset trước DAG tạo lịch sử mới, nên bản cuối có version 25 cho 26 lần ghi thành công, nhưng dataset_version và nội dung frame vẫn không đổi.
 `input_video_sha256` xác định chính xác hai file video nguồn:
 
 ```text
@@ -123,28 +123,59 @@ drive_b: bfa62703f645ff77a8578ae3fc74a00881140d38a404d43c8e2af265bbee9fdc
 ```
 
 Manifest còn ghi luật loại đen/mờ/gần trùng/không sync_ok, split theo trip phân tầng theo drive và checksum manifest Parquet. Sau 3 tháng, cần giữ manifest, dữ liệu nguồn đúng checksum, các phiên bản Delta kèm log/file dữ liệu, MSSV `2A202602625`, code Git và cấu hình/ngưỡng/thư viện để đọc lại hoặc dựng lại đúng kết quả.
-Lineage giúp truy ngược phiên bản bảng và video; manifest hiện không ghi trực tiếp MSSV, commit code hay toàn bộ cấu hình môi trường, nên không thể chỉ dựa vào manifest để tái tạo mọi chi tiết. Bản sao nguyên manifest và đối chiếu split được lưu trong `report/evidence/gold_manifest_second.json` và `gold_observations.json`.
+Lineage giúp truy ngược phiên bản bảng và video; manifest hiện không ghi trực tiếp MSSV, commit code hay toàn bộ cấu hình môi trường, nên không thể chỉ dựa vào manifest để tái tạo mọi chi tiết. Bản cuối nằm trong `report/evidence/manifest_after_recovery.json`; hai bản `gold_manifest_first.json`/`gold_manifest_second.json` lưu bằng chứng export lặp ở Bước 4.
 
 ## Bước 5 · Điều phối và phục vụ
 
 ### Câu 9
 Mô tả chính xác điều xảy ra khi trip của bạn sập rồi chạy lại: bao nhiêu task chuyển đỏ, bao nhiêu task `upstream_failed`, bạn clear gì, dữ liệu có nhân đôi không, `dataset_version` có đổi không? Bằng chứng (ảnh, số) là gì?
 
-(trả lời ở đây)
+MSSV thật là `2A202602625`. Vì lệnh mẫu `int(MSSV)` không nhận chữ, tôi dùng phần số sau tiền tố `2A` theo lựa chọn đã xác nhận: `202602625 % 26 = 17`, ứng với `trip-06570` trong danh sách trip đã sắp xếp; MSSV dùng cho split vẫn giữ nguyên cả chuỗi `2A202602625`.
+Lượt DAG chuẩn có 37 task instance thành công, gồm 26 `silver_frames`. Sau khi bật `LAB_FAIL_ONCE=trip-06570`, reset rồi trigger lại, chỉ `silver_frames[17]` failed; 7 task downstream là `upstream_failed`, 29 task còn lại đã success. Log có `RuntimeError: simulated crash while extracting trip-06570; run it again`; lỗi mô phỏng xuất hiện trước khi ghi dữ liệu của trip.
+Tôi chọn Clear and Retry trên đúng instance `[17]`. Hộp thoại bật Downstream, nên phạm vi phục hồi là 1 task lỗi và 7 task đang bị chặn, không có task success nào; không clear cả nhóm 26 frame task hoặc chạy lại cả DAG từ đầu. Các task downstream được mở lại trạng thái để chạy lần đầu sau khi trip lỗi được xử lý.
+Sau phục hồi, cùng run ID `manual__2026-10-12T10:42:27.791776+00:00` có 37/37 task success. Chỉ map index 17 có try number 2; 25 frame task khác vẫn try 1, và cả 29 task đã success trước clear giữ nguyên start/end time và try number.
+Trip được phục hồi có 45 frame; toàn Silver có 1.246 dòng và 1.246 frame_id duy nhất, Gold có 1.019 dòng và 1.019 frame_id duy nhất. Dấu vân tay frame trước/sau đều `6c7480dfde7e`, dataset_version đều `4af87f527536`, train/val/test vẫn 718/149/152; không nhân đôi dữ liệu.
+Verify sau phục hồi đạt 27/27; tôi gỡ `LAB_FAIL_ONCE` khỏi `.env` và áp dụng lại Compose. Warehouse có đủ 6 mart; gallery có 1.019 dòng khớp Gold.
+Bằng chứng: `airflow_graph.png`, `fail_task_log.png`, `airflow_clear_scope.png`, `airflow_retry_graph.png` trong `report/screenshots/`; `airflow_failure_before_clear.json`, `airflow_recovered.json`, `airflow_recovery_summary.json`, `dataset_baseline.json`, `dataset_after_recovery.json`, `airflow_fail_task_log.txt` trong `report/evidence/`, cùng `report/verify.txt` và `run_summary.json`.
 
 ### Câu 10
 Nâng từ 2 drive lên **500 xe mỗi ngày**: ba thành phần nào của pipeline này sẽ vỡ đầu tiên, và bạn thay bằng gì (nối với slide 12, 22, 23)?
 
-(trả lời ở đây)
+Nếu mỗi xe có khối lượng tương đương một drive của lab, 500 xe là khoảng 250 lần số nguồn hiện tại. Tôi dự đoán ba nút nghẽn dưới đây từ cấu hình đang chạy; đây là phân tích kiến trúc, chưa phải benchmark 500 xe.
+Thứ nhất là trích video trên worker Airflow: lab dùng LocalExecutor, parallelism 2 và giới hạn một task `silver_frames` chạy cùng lúc trong mỗi DAG run. Cần tách scheduler khỏi worker, dùng hàng đợi/worker phân tán và mở rộng số worker xử lý FFmpeg theo trip, với giới hạn CPU/RAM và ghi idempotent theo trip.
+Thứ hai là ELT dbt/DuckDB trên một file `lakehouse.duckdb` ở ổ local trong container giới hạn RAM khoảng 2,5 GB. Khi scan/join và nhiều job cùng tăng, cần engine SQL phân tán đọc lakehouse và adapter dbt phù hợp, tổ chức partition/compaction để giảm đọc dư; dbt vẫn giữ vai trò định nghĩa model và test, không tự trở thành engine phân tán.
+Thứ ba là lớp lưu trữ MinIO một instance, giới hạn 768 MB, nhận video, rất nhiều JPG nhỏ và các file Delta. Cần object storage có khả năng mở rộng/dự phòng, tối ưu số request/file nhỏ, quản lý vòng đời và dung lượng; không đưa toàn bộ dữ liệu gốc vào warehouse/dashboard.
+Các thay đổi tương ứng với việc tách storage–compute–orchestration trong kiến trúc dữ liệu, mở rộng phần ELT/kiểm tra chất lượng và xử lý video theo partition. Vẫn phải giữ lineage, cổng error/warn và split theo trip; tăng máy nhưng mất các bảo đảm này sẽ tạo dataset lớn mà khó tin cậy.
 
 ## Câu hỏi riêng của bạn trên Metabase
 
 Câu SQL bạn thêm vào dashboard và điều nó cho biết:
 
-(trả lời ở đây)
+Câu hỏi: “Drive nào giữ được tỷ lệ frame cao hơn sau cổng chất lượng?” Tôi thêm câu SQL sau vào dashboard Metabase, dựa trên `marts.mart_trip_summary` để đếm frame bị loại đúng một lần thay vì cộng các cờ có thể chồng nhau:
+
+```sql
+select drive_id,
+       sum(frames) as frames_total,
+       sum(frames_kept) as frames_kept,
+       round(100.0 * sum(frames_kept) / nullif(sum(frames), 0), 2) as kept_pct,
+       round(100.0 * (sum(frames) - sum(frames_kept)) / nullif(sum(frames), 0), 2) as dropped_pct
+from marts.mart_trip_summary
+group by drive_id
+order by drive_id;
+```
+
+| Drive | Tổng frame | Giữ lại | Giữ (%) | Loại (%) |
+|---|---:|---:|---:|---:|
+| drive_a | 602 | 436 | 72,43 | 27,57 |
+| drive_b | 644 | 583 | 90,53 | 9,47 |
+
+B có tỷ lệ giữ cao hơn A 18,10 điểm phần trăm. Số liệu bước 3 cho thấy A có nhiều frame gần trùng hơn (149 so với 53) và có thêm frame mờ, phù hợp với chênh lệch này; vì cờ có thể chồng nhau, bảng tỷ lệ riêng không chứng minh đóng góp độc lập của từng lý do.
+Question: `http://localhost:3000/question/46`; dashboard: `http://localhost:3000/dashboard/2`. SQL và kết quả trả về được lưu trong `report/evidence/metabase_question.json`.
 
 ## Nhìn lại
 
 Điều bạn thấy bất ngờ nhất, điều gì còn chưa rõ, và một lỗi dữ liệu mà bạn nghĩ pipeline **chưa** bắt được (nếu có). Tối đa 8 dòng.
 
-(trả lời ở đây)
+Điểm đáng chú ý là frame tối vẫn có thể rất nét và dùng được: B có 61 frame tối nhưng 58 frame vẫn đủ điều kiện vào Gold; loại tất cả cảnh tối sẽ làm dataset thiếu những tình huống thực tế.
+Một điều cần tìm hiểu thêm là ngưỡng dHash/blur thay đổi thế nào khi FPS, tốc độ xe và camera thay đổi; số đếm của lab chưa chứng minh ngưỡng 2 là tối ưu cho chất lượng mô hình.
+Pipeline chưa có test kiểm tra GPS nhảy bất thường hoặc sự nhất quán vật lý giữa tốc độ và quãng đường từ GPS: các tọa độ parse được và tốc độ nằm trong ngưỡng vẫn có thể mâu thuẫn. Tôi sẽ bổ sung kiểm tra theo event time và ghi lý do quarantine thay vì xóa dòng.

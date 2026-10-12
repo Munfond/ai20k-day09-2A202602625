@@ -1,0 +1,125 @@
+{
+  "student_id": "2A202602625",
+  "files": [
+    {
+      "file": "airflow_clear_scope.png",
+      "format": "PNG",
+      "width": 480,
+      "height": 647,
+      "bytes": 156405,
+      "sha256": "df2d1056e826270498a1a8fec5e01e717bf3f9ea519ca3fca30aa4f368011daa"
+    },
+    {
+      "file": "airflow_graph.png",
+      "format": "PNG",
+      "width": 406,
+      "height": 494,
+      "bytes": 50337,
+      "sha256": "f5a6b1dbf86f97641c39e19e15e692a82a3ea2377bd17f4eaeb3d0bba489d981"
+    },
+    {
+      "file": "airflow_retry_graph.png",
+      "format": "PNG",
+      "width": 480,
+      "height": 1025,
+      "bytes": 222135,
+      "sha256": "87bf20c96e40c12e4c978b6c7ef57a75c31885249d86f7cb10fcae57c255c003"
+    },
+    {
+      "file": "bronze_delta.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 84451,
+      "sha256": "ffb2584b1c89ca9d91fa5bc2fcc407dedfde01a2a03a63f0e38a06ab58fa8b36"
+    },
+    {
+      "file": "bronze_delta_commit.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 89157,
+      "sha256": "f824effc4933f09f1273831e7dbbcb40b90a12a9b741884461590176a6c0edbd"
+    },
+    {
+      "file": "bronze_video_a.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 88463,
+      "sha256": "50b9c9a32a8675862003ce0ef8184406dca406085a8038d1edfecbe9f6987419"
+    },
+    {
+      "file": "fail_task_log.png",
+      "format": "PNG",
+      "width": 480,
+      "height": 647,
+      "bytes": 315651,
+      "sha256": "2f7b79ae364cdaab00d252cb9a6c99a7dde1323ce286028192bf7e9109ecc791"
+    },
+    {
+      "file": "gold_dataset.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 81943,
+      "sha256": "ea57dc80ce7f4b5125e26eb8c5fd0c6cb26d2762b42e38ea590b7c26079d797e"
+    },
+    {
+      "file": "metabase_dashboard.png",
+      "format": "PNG",
+      "width": 1280,
+      "height": 720,
+      "bytes": 301969,
+      "sha256": "2b6fb682a546168ae012c2d27388793e84b2c1ab4cfbec3cdd101382ef242a9e"
+    },
+    {
+      "file": "metabase_question.png",
+      "format": "PNG",
+      "width": 1280,
+      "height": 720,
+      "bytes": 143872,
+      "sha256": "876edc65ed1f2cfcaa95125bfe414fb6b31baa1f60965a743b697007fb908110"
+    },
+    {
+      "file": "minio_lake.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 84409,
+      "sha256": "147cb0c5244803ab2aab85d656e2b5193ba699e02bd519b9af6420bc6cdc816a"
+    },
+    {
+      "file": "silver_frame_black.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 44966,
+      "sha256": "eb6b52a1292e7db32cff4bddb06e3b051d3ef94d1216824a7ad9820187502ca4"
+    },
+    {
+      "file": "silver_frame_blurry.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 84974,
+      "sha256": "bcdbcd264a8a6e1fcba7538c2e06f7646b90e40f5da6b2855fd5f29b47772136"
+    },
+    {
+      "file": "silver_frame_dark_kept.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 132561,
+      "sha256": "2f41ee9ae5866d3d0ae51121f8a7bf74ba956fcf929e6d9a83627b06727d3cec"
+    },
+    {
+      "file": "silver_frame_normal.png",
+      "format": "PNG",
+      "width": 421,
+      "height": 512,
+      "bytes": 128255,
+      "sha256": "10d360f527e356e216861c5ebb671fe8438510a8cb7e0f3bc95b781f9f427d90"
+    }
+  ]
+}

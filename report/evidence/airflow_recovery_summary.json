@@ -1,0 +1,152 @@
+{
+  "student_id": "2A202602625",
+  "trip": "trip-06570",
+  "selection_rule": "user authorized numeric suffix 202602625 modulo 26 = 17",
+  "run_id": "manual__2026-10-12T10:42:27.791776+00:00",
+  "failed_before_clear": 1,
+  "upstream_failed_before_clear": 7,
+  "successful_before_clear": 29,
+  "clear_scope": {
+    "mapped_silver_frames": [
+      17
+    ],
+    "previously_blocked_downstream": 7,
+    "successful_tasks_cleared": 0
+  },
+  "mapped_frame_tasks_retried": [
+    {
+      "task_id": "silver_frames",
+      "map_index": 17,
+      "state": "success",
+      "try_number": 2,
+      "start_date": "2026-10-12T12:51:14.046399+00:00",
+      "end_date": "2026-10-12T12:51:18.845164+00:00",
+      "trip_id": "trip-06570"
+    }
+  ],
+  "already_successful_tasks_unchanged": [
+    {
+      "task_id": "bronze_drive_a",
+      "map_index": -1
+    },
+    {
+      "task_id": "bronze_drive_b",
+      "map_index": -1
+    },
+    {
+      "task_id": "bronze_trips",
+      "map_index": -1
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 0
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 1
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 2
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 3
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 4
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 5
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 6
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 7
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 8
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 9
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 10
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 11
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 12
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 13
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 14
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 15
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 16
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 18
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 19
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 20
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 21
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 22
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 23
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 24
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 25
+    },
+    {
+      "task_id": "trip_commands",
+      "map_index": -1
+    }
+  ],
+  "success_after_clear": 37,
+  "baseline_dataset_version": "4af87f527536",
+  "final_dataset_version": "4af87f527536",
+  "unchanged_dataset": true,
+  "frames_rows": 1246,
+  "gold_rows": 1019,
+  "frames_fingerprint": "6c7480dfde7e"
+}

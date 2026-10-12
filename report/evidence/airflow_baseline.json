@@ -1,0 +1,346 @@
+{
+  "run": {
+    "dag_id": "day09_video_pipeline",
+    "run_id": "manual__2026-10-12T10:33:02.250031+00:00",
+    "state": "success",
+    "execution_date": "2026-10-12T10:33:02.250031+00:00",
+    "start_date": "2026-10-12T10:33:02.505008+00:00",
+    "end_date": "2026-10-12T10:37:41.175486+00:00"
+  },
+  "tasks": [
+    {
+      "task_id": "bronze_drive_a",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:03.022712+00:00",
+      "end_date": "2026-10-12T10:33:06.909916+00:00"
+    },
+    {
+      "task_id": "bronze_drive_b",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:03.005372+00:00",
+      "end_date": "2026-10-12T10:33:06.967482+00:00"
+    },
+    {
+      "task_id": "bronze_trips",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:08.580404+00:00",
+      "end_date": "2026-10-12T10:33:10.846209+00:00"
+    },
+    {
+      "task_id": "dbt_run_gold",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:36:23.729838+00:00",
+      "end_date": "2026-10-12T10:36:34.387337+00:00"
+    },
+    {
+      "task_id": "dbt_run_silver",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:52.029131+00:00",
+      "end_date": "2026-10-12T10:36:06.767892+00:00"
+    },
+    {
+      "task_id": "dbt_test_gold",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:36:36.166044+00:00",
+      "end_date": "2026-10-12T10:36:48.377029+00:00"
+    },
+    {
+      "task_id": "dbt_test_silver",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:36:07.501395+00:00",
+      "end_date": "2026-10-12T10:36:22.599017+00:00"
+    },
+    {
+      "task_id": "export_dataset",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:36:55.235945+00:00",
+      "end_date": "2026-10-12T10:37:32.608153+00:00"
+    },
+    {
+      "task_id": "publish_lake",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:36:50.06104+00:00",
+      "end_date": "2026-10-12T10:36:53.695145+00:00"
+    },
+    {
+      "task_id": "publish_warehouse",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:37:35.489291+00:00",
+      "end_date": "2026-10-12T10:37:40.977933+00:00"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 0,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:16.173405+00:00",
+      "end_date": "2026-10-12T10:33:19.943227+00:00",
+      "trip_id": "trip-00003"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:20.777533+00:00",
+      "end_date": "2026-10-12T10:33:24.772127+00:00",
+      "trip_id": "trip-00722"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 2,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:25.665001+00:00",
+      "end_date": "2026-10-12T10:33:31.012438+00:00",
+      "trip_id": "trip-01037"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 3,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:32.851743+00:00",
+      "end_date": "2026-10-12T10:33:37.341421+00:00",
+      "trip_id": "trip-02086"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 4,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:38.900427+00:00",
+      "end_date": "2026-10-12T10:33:42.665823+00:00",
+      "trip_id": "trip-02097"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 5,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:43.755134+00:00",
+      "end_date": "2026-10-12T10:33:47.865143+00:00",
+      "trip_id": "trip-02134"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 6,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:49.231565+00:00",
+      "end_date": "2026-10-12T10:33:51.187461+00:00",
+      "trip_id": "trip-02689"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 7,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:51.983597+00:00",
+      "end_date": "2026-10-12T10:33:54.153024+00:00",
+      "trip_id": "trip-02736"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 8,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:55.401999+00:00",
+      "end_date": "2026-10-12T10:34:01.700114+00:00",
+      "trip_id": "trip-03365"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 9,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:05.790224+00:00",
+      "end_date": "2026-10-12T10:34:09.48967+00:00",
+      "trip_id": "trip-03904"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 10,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:10.293628+00:00",
+      "end_date": "2026-10-12T10:34:17.057434+00:00",
+      "trip_id": "trip-04237"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 11,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:17.700636+00:00",
+      "end_date": "2026-10-12T10:34:22.531256+00:00",
+      "trip_id": "trip-04324"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 12,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:25.405355+00:00",
+      "end_date": "2026-10-12T10:34:30.21299+00:00",
+      "trip_id": "trip-04622"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 13,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:31.581723+00:00",
+      "end_date": "2026-10-12T10:34:35.521727+00:00",
+      "trip_id": "trip-04868"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 14,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:35.941969+00:00",
+      "end_date": "2026-10-12T10:34:39.318594+00:00",
+      "trip_id": "trip-04871"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 15,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:40.344511+00:00",
+      "end_date": "2026-10-12T10:34:44.098534+00:00",
+      "trip_id": "trip-05297"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 16,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:46.261009+00:00",
+      "end_date": "2026-10-12T10:34:52.881533+00:00",
+      "trip_id": "trip-05905"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 17,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:34:55.328259+00:00",
+      "end_date": "2026-10-12T10:35:01.560066+00:00",
+      "trip_id": "trip-06570"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 18,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:03.239123+00:00",
+      "end_date": "2026-10-12T10:35:06.955962+00:00",
+      "trip_id": "trip-06667"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 19,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:10.163811+00:00",
+      "end_date": "2026-10-12T10:35:14.49845+00:00",
+      "trip_id": "trip-07304"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 20,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:15.499109+00:00",
+      "end_date": "2026-10-12T10:35:21.658734+00:00",
+      "trip_id": "trip-07774"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 21,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:22.364062+00:00",
+      "end_date": "2026-10-12T10:35:26.557171+00:00",
+      "trip_id": "trip-07900"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 22,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:27.599493+00:00",
+      "end_date": "2026-10-12T10:35:31.812722+00:00",
+      "trip_id": "trip-08448"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 23,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:32.474107+00:00",
+      "end_date": "2026-10-12T10:35:39.275318+00:00",
+      "trip_id": "trip-08888"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 24,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:39.965342+00:00",
+      "end_date": "2026-10-12T10:35:44.52763+00:00",
+      "trip_id": "trip-09209"
+    },
+    {
+      "task_id": "silver_frames",
+      "map_index": 25,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:35:45.005224+00:00",
+      "end_date": "2026-10-12T10:35:50.617258+00:00",
+      "trip_id": "trip-09608"
+    },
+    {
+      "task_id": "trip_commands",
+      "map_index": -1,
+      "state": "success",
+      "try_number": 1,
+      "start_date": "2026-10-12T10:33:11.917858+00:00",
+      "end_date": "2026-10-12T10:33:14.05566+00:00"
+    }
+  ],
+  "student_id": "2A202602625",
+  "captured_at": "2026-10-12T10:38:00.587547+00:00",
+  "task_state_counts": {
+    "success": 37
+  },
+  "mapped_frames_count": 26,
+  "trip_selection": {
+    "rule": "numeric suffix after 2A, authorized by user",
+    "numeric_id": 202602625,
+    "index": 17,
+    "trip": "trip-06570"
+  }
+}
